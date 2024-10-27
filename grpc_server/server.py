@@ -1,14 +1,26 @@
-from concurrent import futures
-import logging
+import sys
+sys.path.insert(0, '../protos')
 
+import csv
 import grpc
+import logging
 import meter_pb2
 import meter_pb2_grpc
 
+from concurrent import futures
+
 
 class MeterReadingServicer(meter_pb2_grpc.MeterReadingServicer):
-    def SayHello(self, request, context):
-        return meter_pb2.MeterReadingReply(message="Hello, %s!" % request.name)
+    def IssueMeterReading(self, request, context):
+        with open('./data/meterusage.csv') as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=',')
+            for line_number, line in enumerate(csv_reader):
+                if line_number == 0:
+                    print(f'Column names are {", ".join(line)}')
+                else:
+                    print(line)
+                    timestamp, meter_reading_value = line[0], line[1]
+                    yield meter_pb2.MeterReadingReply(timestamp=timestamp, meter_reading_value=meter_reading_value)
 
 
 def serve():

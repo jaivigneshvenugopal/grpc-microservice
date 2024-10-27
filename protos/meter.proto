@@ -2,14 +2,12 @@ edition = "2023";
 import "google/protobuf/timestamp.proto";
 
 service MeterReading {
-	rpc IssueMeterReading (MeterReadingRequest) returns (MeterReadingReply) {}
+	rpc IssueMeterReading (MeterReadingRequest) returns (stream MeterReadingReply) {}
 }
 
-message MeterReadingRequest {
-	string name = 1;
-}
+message MeterReadingRequest {}
 
 message MeterReadingReply {
     google.protobuf.Timestamp timestamp = 1;
-	float meter_reading = 2;
+	float meter_reading_value = 2;
 }

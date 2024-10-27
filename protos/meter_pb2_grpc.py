@@ -34,7 +34,7 @@ class MeterReadingStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.IssueMeterReading = channel.unary_unary(
+        self.IssueMeterReading = channel.unary_stream(
                 '/MeterReading/IssueMeterReading',
                 request_serializer=meter__pb2.MeterReadingRequest.SerializeToString,
                 response_deserializer=meter__pb2.MeterReadingReply.FromString,
@@ -53,7 +53,7 @@ class MeterReadingServicer(object):
 
 def add_MeterReadingServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'IssueMeterReading': grpc.unary_unary_rpc_method_handler(
+            'IssueMeterReading': grpc.unary_stream_rpc_method_handler(
                     servicer.IssueMeterReading,
                     request_deserializer=meter__pb2.MeterReadingRequest.FromString,
                     response_serializer=meter__pb2.MeterReadingReply.SerializeToString,
@@ -80,7 +80,7 @@ class MeterReading(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
+        return grpc.experimental.unary_stream(
             request,
             target,
             '/MeterReading/IssueMeterReading',

@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0bmeter.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"#\n\x13MeterReadingRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"Y\n\x11MeterReadingReply\x12-\n\ttimestamp\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x15\n\rmeter_reading\x18\x02 \x01(\x02\x32O\n\x0cMeterReading\x12?\n\x11IssueMeterReading\x12\x14.MeterReadingRequest\x1a\x12.MeterReadingReply\"\x00\x62\x08\x65\x64itionsp\xe8\x07')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0bmeter.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x15\n\x13MeterReadingRequest\"_\n\x11MeterReadingReply\x12-\n\ttimestamp\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1b\n\x13meter_reading_value\x18\x02 \x01(\x02\x32Q\n\x0cMeterReading\x12\x41\n\x11IssueMeterReading\x12\x14.MeterReadingRequest\x1a\x12.MeterReadingReply\"\x00\x30\x01\x62\x08\x65\x64itionsp\xe8\x07')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -33,9 +33,9 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'meter_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_METERREADINGREQUEST']._serialized_start=48
-  _globals['_METERREADINGREQUEST']._serialized_end=83
-  _globals['_METERREADINGREPLY']._serialized_start=85
-  _globals['_METERREADINGREPLY']._serialized_end=174
-  _globals['_METERREADING']._serialized_start=176
-  _globals['_METERREADING']._serialized_end=255
+  _globals['_METERREADINGREQUEST']._serialized_end=69
+  _globals['_METERREADINGREPLY']._serialized_start=71
+  _globals['_METERREADINGREPLY']._serialized_end=166
+  _globals['_METERREADING']._serialized_start=168
+  _globals['_METERREADING']._serialized_end=249
 # @@protoc_insertion_point(module_scope)
