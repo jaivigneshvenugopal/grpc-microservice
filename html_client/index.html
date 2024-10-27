@@ -25,32 +25,23 @@
 
 <body>
     <!-- Table to display fetched user data -->
-    <table id="users"></table>
+    <table id="records"></table>
     </div>
 
     <script>
-        fetch("https://jsonplaceholder.typicode.com/users")
-            // Converting received data to JSON
+        fetch("http://localhost:8000/")
             .then((response) => response.json())
             .then((json) => {
-
-                // 2. Create a variable to store HTML table headers
-                let li = `<tr><th>ID</th><th>Name</th><th>User Name</th><th>Email</th> <th>Phone</th><th>Website</th></tr>`;
-
-                // 3. Loop through each data and add a table row
-                json.forEach((user) => {
+                let li = `<tr><th>Timestamp</th><th>Meter Reading</th></tr>`;
+                json.forEach((record) => {
                     li += `<tr>
-                            <td>${user.id}</td>
-                            <td>${user.name} </td>
-                            <td>${user.username}</td>
-                            <td>${user.email}</td>
-                            <td>${user.phone}</td>
-                            <td>${user.website}</td>
+                            <td>${record.timestamp}</td>
+                            <td>${record.meterReadingValue} </td>
                         </tr>`;
                 });
 
                 // 4. DOM Display result
-                document.getElementById("users").innerHTML = li;
+                document.getElementById("records").innerHTML = li;
             });
     </script>
 </body>
