@@ -1,5 +1,4 @@
 <head>
-    <!-- CSS Center = cssc;01 -->
     <style>
         body {
             width: 90%;
@@ -22,7 +21,6 @@
             padding: 0.5rem;
         }
     </style>
-    <title>Fetch API rev 03.3</title>
 </head>
 
 <body>
@@ -42,13 +40,13 @@
                 // 3. Loop through each data and add a table row
                 json.forEach((user) => {
                     li += `<tr>
-                <td>${user.id}</td>
-                <td>${user.name} </td>
-                <td>${user.username}</td>
-                <td>${user.email}</td>
-                <td>${user.phone}</td>
-                <td>${user.website}</td>
-            </tr>`;
+                            <td>${user.id}</td>
+                            <td>${user.name} </td>
+                            <td>${user.username}</td>
+                            <td>${user.email}</td>
+                            <td>${user.phone}</td>
+                            <td>${user.website}</td>
+                        </tr>`;
                 });
 
                 // 4. DOM Display result
