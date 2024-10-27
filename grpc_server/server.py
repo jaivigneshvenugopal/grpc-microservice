@@ -9,6 +9,8 @@ import meter_pb2_grpc
 
 from concurrent import futures
 
+from google.protobuf.timestamp_pb2 import Timestamp
+from datetime import datetime
 
 class MeterReadingServicer(meter_pb2_grpc.MeterReadingServicer):
     def IssueMeterReading(self, request, context):
@@ -19,8 +21,10 @@ class MeterReadingServicer(meter_pb2_grpc.MeterReadingServicer):
                     print(f'Column names are {", ".join(line)}')
                 else:
                     print(line)
-                    timestamp, meter_reading_value = line[0], line[1]
-                    yield meter_pb2.MeterReadingReply(timestamp=timestamp, meter_reading_value=meter_reading_value)
+                    raw_timestamp, raw_meter_reading_value = line[0], line[1]
+                    datetime_timestamp = datetime.strptime(raw_timestamp, "%Y-%m-%d %H:%M:%S").timestamp()
+                    protobuf_timestamp = Timestamp(seconds=int(datetime_timestamp), nanos=int(datetime_timestamp % 1 * 1e9))
+                    yield meter_pb2.MeterReadingReply(timestamp=protobuf_timestamp, meter_reading_value=float(raw_meter_reading_value))
 
 
 def serve():
