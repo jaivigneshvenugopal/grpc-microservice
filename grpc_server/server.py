@@ -18,13 +18,11 @@ class MeterReadingServicer(meter_pb2_grpc.MeterReadingServicer):
             csv_reader = csv.reader(csv_file, delimiter=',')
             for line_number, line in enumerate(csv_reader):
                 if line_number == 0:
-                    print(f'Column names are {", ".join(line)}')
-                else:
-                    print(line)
-                    raw_timestamp, raw_meter_reading_value = line[0], line[1]
-                    datetime_timestamp = datetime.strptime(raw_timestamp, "%Y-%m-%d %H:%M:%S").timestamp()
-                    protobuf_timestamp = Timestamp(seconds=int(datetime_timestamp), nanos=int(datetime_timestamp % 1 * 1e9))
-                    yield meter_pb2.MeterReadingReply(timestamp=protobuf_timestamp, meter_reading_value=float(raw_meter_reading_value))
+                    continue
+                raw_timestamp, raw_meter_reading_value = line[0], line[1]
+                datetime_timestamp = datetime.strptime(raw_timestamp, "%Y-%m-%d %H:%M:%S").timestamp()
+                protobuf_timestamp = Timestamp(seconds=int(datetime_timestamp), nanos=int(datetime_timestamp % 1 * 1e9))
+                yield meter_pb2.MeterReadingReply(timestamp=protobuf_timestamp, meter_reading_value=float(raw_meter_reading_value))
 
 
 def serve():
