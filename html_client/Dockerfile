@@ -1,5 +1,7 @@
 FROM nginx
 
-WORKDIR /app/html_client
+EXPOSE 80
 
 COPY ./html_client /usr/share/nginx/html
+
+CMD ["nginx"]
