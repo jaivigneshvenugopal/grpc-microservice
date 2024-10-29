@@ -39,9 +39,16 @@
                             <td>${record.meterReadingValue} </td>
                         </tr>`;
                 });
-
-                // 4. DOM Display result
                 document.getElementById("records").innerHTML = li;
-            });
+            })
+            .catch((error) => {
+                console.log(error);
+                let li = `<tr><th>Timestamp</th><th>Meter Reading</th></tr>`;
+                li += `<tr>
+                        <td>Error</td>
+                        <td>Error</td>
+                    </tr>`;
+                document.getElementById("records").innerHTML = li;
+            })
     </script>
 </body>
