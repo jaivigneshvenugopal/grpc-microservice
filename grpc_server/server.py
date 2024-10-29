@@ -3,7 +3,6 @@ sys.path.insert(0, '../protos')
 
 import csv
 import grpc
-import logging
 import meter_pb2
 import meter_pb2_grpc
 
@@ -36,5 +35,4 @@ def serve():
 
 
 if __name__ == "__main__":
-    logging.basicConfig()
     serve()

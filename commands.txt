@@ -2,7 +2,22 @@
 python -m grpc_tools.protoc -I ./protos --python_out=. --pyi_out=. --grpc_python_out=. ./protos/meter.proto
 
 
+
+# docker
+docker stop $(docker ps -a -q)
+
 # docker http_client
 docker build -t http_client .
 docker run -d -p 80:80 http_client
-docker stop $(docker ps -a -q)
+docker tag http_client:latest jaivigneshvenugopal/http_client:latest
+docker push jaivigneshvenugopal/http_client
+
+# docker grpc_server
+docker build -t grpc_server .
+WORKDIR /usr/src/src
+
+docker run -d -p 80:80 grpc_server
+docker build -t grpc_server .
+docker run -d -p 80:80 grpc_server
+docker tag grpc_server:latest jaivigneshvenugopal/grpc_server:latest
+docker push jaivigneshvenugopal/grpc_server
