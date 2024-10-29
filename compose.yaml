@@ -1,0 +1,13 @@
+services:
+  grpc_server:
+    image: "jaivigneshvenugopal/grpc_server:latest"
+    ports:
+      - "50051:50051"
+  grpc_client:
+    image: "jaivigneshvenugopal/grpc_client:latest"
+    ports:
+      - "8080:8080"
+  html_client:
+    image: "jaivigneshvenugopal/html_client:latest"
+    ports:
+      - "80:80"

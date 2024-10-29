@@ -29,7 +29,7 @@
     </div>
 
     <script>
-        fetch("http://localhost:8080/")
+        fetch("http://grpc_client:8080/")
             .then((response) => response.json())
             .then((json) => {
                 let li = `<tr><th>Timestamp</th><th>Meter Reading</th></tr>`;

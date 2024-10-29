@@ -22,7 +22,7 @@ app.add_middleware(
 @app.get("/")
 def read_root():
     output = []
-    with grpc.insecure_channel("localhost:50051") as channel:
+    with grpc.insecure_channel("grpc_server:50051") as channel:
         stub = meter_pb2_grpc.MeterReadingStub(channel)
         responses = stub.IssueMeterReading(meter_pb2.MeterReadingRequest())
         for response in responses:
@@ -31,4 +31,4 @@ def read_root():
     return output
 
 if __name__ == "__main__":
-    uvicorn.run(app, port=8080)
+    uvicorn.run(app, host="0.0.0.0", port=8080)
