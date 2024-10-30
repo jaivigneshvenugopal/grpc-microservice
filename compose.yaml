@@ -1,13 +1,24 @@
 services:
   grpc_server:
+    container_name: grpc_server
     image: "jaivigneshvenugopal/grpc_server:latest"
     ports:
       - "50051:50051"
+
   grpc_client:
+    container_name: grpc_client
+    depends_on:
+      - grpc_server
     image: "jaivigneshvenugopal/grpc_client:latest"
     ports:
       - "8080:8080"
+
   html_client:
-    image: "jaivigneshvenugopal/html_client:latest"
+    container_name: html_client
+    depends_on:
+      - grpc_client
+    image: "nginx:latest"
     ports:
       - "80:80"
+    volumes:
+      - ./html_client:/usr/share/nginx/html
