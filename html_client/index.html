@@ -24,7 +24,6 @@
 </head>
 
 <body>
-    <!-- Table to display fetched user data -->
     <table id="records"></table>
     </div>
 
@@ -32,6 +31,7 @@
         fetch("http://localhost:8080")
             .then((response) => response.json())
             .then((json) => {
+                console.log(json)
                 let li = `<tr><th>Timestamp</th><th>Meter Reading</th></tr>`;
                 json.forEach((record) => {
                     li += `<tr>
