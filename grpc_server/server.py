@@ -1,28 +1,23 @@
 import sys
 sys.path.insert(0, '../protos')
+sys.path.insert(0, '../models')
 
-import csv
 import grpc
 import meter_pb2
 import meter_pb2_grpc
 
 from concurrent import futures
 
-from google.protobuf.timestamp_pb2 import Timestamp
-from datetime import datetime
+from meter_reader import MeterReader
 
 class MeterReadingServicer(meter_pb2_grpc.MeterReadingServicer):
-    def IssueMeterReading(self, request, context):
-        with open('./data/meterusage.csv') as csv_file:
-            csv_reader = csv.reader(csv_file, delimiter=',')
-            for line_number, line in enumerate(csv_reader):
-                if line_number == 0:
-                    continue
-                raw_timestamp, raw_meter_reading_value = line[0], line[1]
-                datetime_timestamp = datetime.strptime(raw_timestamp, "%Y-%m-%d %H:%M:%S").timestamp()
-                protobuf_timestamp = Timestamp(seconds=int(datetime_timestamp), nanos=int(datetime_timestamp % 1 * 1e9))
-                yield meter_pb2.MeterReadingReply(timestamp=protobuf_timestamp, meter_reading_value=float(raw_meter_reading_value))
+    def __init__(self):
+        self.meter_reader = MeterReader()
 
+    def IssueMeterReading(self, request, context):
+        for reading in self.meter_reader.get_readings():
+            meter_reading_reply = meter_pb2.MeterReadingReply(timestamp=reading.timestamp, meter_reading_value=reading.meter_reading_value) 
+            yield meter_reading_reply
 
 def serve():
     port = "50051"
@@ -30,9 +25,8 @@ def serve():
     meter_pb2_grpc.add_MeterReadingServicer_to_server(MeterReadingServicer(), server)
     server.add_insecure_port("[::]:" + port)
     server.start()
-    print("Server started, listening on " + port)
+    print("gRPC server started, listening on " + port)
     server.wait_for_termination()
-
 
 if __name__ == "__main__":
     serve()
