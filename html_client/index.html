@@ -24,31 +24,40 @@
 </head>
 
 <body>
-    <table id="records"></table>
-    </div>
+    <table id="records">
+        <tr><th>Timestamp</th><th>Meter Reading</th></tr>
+    </table>
 
     <script>
-        fetch("http://localhost:8080")
-            .then((response) => response.json())
-            .then((json) => {
-                console.log(json)
-                let li = `<tr><th>Timestamp</th><th>Meter Reading</th></tr>`;
-                json.forEach((record) => {
-                    li += `<tr>
-                            <td>${record.timestamp}</td>
-                            <td>${record.meterReadingValue} </td>
-                        </tr>`;
+        async function fetchStream() {
+            const response = await fetch("http://localhost:8080");
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder("utf-8");
+            const outputDiv = document.getElementById("records");
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                const chunk = decoder.decode(value, { stream: true });
+                const lines = chunk.trim().split("\n");
+                lines.forEach(line => {
+                    if (line) {
+                        const data = JSON.parse(line);
+                        const newRow = document.createElement("tr");
+                        newRow.innerHTML = `
+                            <td>${data.timestamp}</td>
+                            <td>${data.meterReadingValue}</td>
+                        `;
+                        outputDiv.appendChild(newRow); 
+                        window.scrollTo({
+                            top: document.body.scrollHeight,
+                            behavior: "smooth"
+                        });
+                    }
                 });
-                document.getElementById("records").innerHTML = li;
-            })
-            .catch((error) => {
-                console.log(error);
-                let li = `<tr><th>Timestamp</th><th>Meter Reading</th></tr>`;
-                li += `<tr>
-                        <td>Error</td>
-                        <td>Error</td>
-                    </tr>`;
-                document.getElementById("records").innerHTML = li;
-            })
+            }
+        }
+        fetchStream();
     </script>
 </body>

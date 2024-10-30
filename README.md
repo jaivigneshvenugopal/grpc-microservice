@@ -15,7 +15,7 @@ used to enable the 3 services to be run on the same host with different ports.
 3. At the root of the repository, run `docker compose up`
 4. Terminal Status
     - ![](./assets/docker_compose.png)
-5. Visit [http://localhost:80](https://localhost:80)
+5. Visit [http://localhost:80/](http://localhost:80/)
     - ![](./assets/html.png)
 
 # Rationale behind a few decisions 
@@ -45,3 +45,8 @@ used to enable the 3 services to be run on the same host with different ports.
     results once they are ready. As opposed to a CSV file, a live system would
     have just a meter that is churning out these values at a fast rate. This
     calls for the need to 'stream' as opposed to sending values in bulk.
+
+# Additional To-dos
+1. Since the images are hosted on docker-hub, it is possible to spin up container service on AWS to have a live website without the need to run anything locally.
+2. Better error-handling during the read from the excel sheet, since there could be irrational values. Right now, I am skipping values that could be wrong, but this could be better written.
+3. 

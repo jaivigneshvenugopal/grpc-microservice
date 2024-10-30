@@ -5,14 +5,12 @@ sys.path.insert(0, '../models')
 import grpc
 import meter_pb2
 import meter_pb2_grpc
-
 from concurrent import futures
-
 from meter_reader import MeterReader
 
 class MeterReadingServicer(meter_pb2_grpc.MeterReadingServicer):
     def __init__(self):
-        self.meter_reader = MeterReader()
+        self.meter_reader: MeterReader = MeterReader()
 
     def IssueMeterReading(self, request, context):
         for reading in self.meter_reader.get_readings():
