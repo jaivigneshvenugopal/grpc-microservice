@@ -25,7 +25,7 @@ def serve():
     meter_pb2_grpc.add_MeterReadingServicer_to_server(MeterReadingServicer(), server)
     server.add_insecure_port("[::]:" + port)
     server.start()
-    print("gRPC server started, listening on " + port)
+    print(f"gRPC server started, listening on port:{port}")
     server.wait_for_termination()
 
 if __name__ == "__main__":

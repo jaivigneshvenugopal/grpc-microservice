@@ -13,13 +13,13 @@ class MeterReader():
         self.csv_file_delimiter: str = ','
         self.raw_date_format: str =  "%Y-%m-%d %H:%M:%S"
 
-    def get_protobuf_timestamp(self, raw_timestamp: str) -> Timestamp:
+    def extract_protobuf_timestamp(self, raw_timestamp: str) -> Timestamp:
         datetime_timestamp = datetime.strptime(raw_timestamp, self.raw_date_format).timestamp()
         protobuf_timestamp = Timestamp(seconds=int(datetime_timestamp), nanos=int(datetime_timestamp % 1 * 1e9))
 
         return protobuf_timestamp
     
-    def get_meter_reading_value(self, raw_meter_reading_value: str) -> float:
+    def extract_meter_reading_value(self, raw_meter_reading_value: str) -> float:
         meter_reading_value = float(raw_meter_reading_value)
 
         return meter_reading_value
@@ -32,9 +32,13 @@ class MeterReader():
                 if line_number == 0:
                     continue
 
-                raw_timestamp, raw_meter_reading_value = line_values[0], line_values[1]
-                protobuf_timestamp = self.get_protobuf_timestamp(raw_timestamp)
-                meter_reading_value = self.get_meter_reading_value(raw_meter_reading_value)
+                try:
+                    raw_timestamp, raw_meter_reading_value = line_values[0], line_values[1]
+                    protobuf_timestamp = self.extract_protobuf_timestamp(raw_timestamp)
+                    meter_reading_value = self.extract_meter_reading_value(raw_meter_reading_value)
+                except Exception as e:
+                    print(e)
+                    continue # skip a reading if it throws an exception
 
                 meter_reading = MeterReading(timestamp=protobuf_timestamp, meter_reading_value=meter_reading_value)
                 
