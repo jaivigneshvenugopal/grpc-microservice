@@ -49,4 +49,5 @@ used to enable the 3 services to be run on the same host with different ports.
 # Additional To-dos
 1. Since the images are hosted on docker-hub, it is possible to spin up container service on AWS to have a live website without the need to run anything locally.
 2. Better error-handling during the read from the excel sheet, since there could be irrational values. Right now, I am skipping values that could be wrong, but this could be better written.
-3. 
+3. Since gRPC is language agnostic, I could have written the server in Go and the client in Python. This would have helped on to leverage Go's speed for time/memory intensive tasks while leveraging Python for non-critical tasks. 
+4. Could have used `pytest` to write some unit and integration tests.
