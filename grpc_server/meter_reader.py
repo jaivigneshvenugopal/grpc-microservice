@@ -14,8 +14,9 @@ class MeterReader():
         self.raw_date_format: str =  "%Y-%m-%d %H:%M:%S"
 
     def extract_protobuf_timestamp(self, raw_timestamp: str) -> Timestamp:
-        datetime_timestamp = datetime.strptime(raw_timestamp, self.raw_date_format).timestamp()
-        protobuf_timestamp = Timestamp(seconds=int(datetime_timestamp), nanos=int(datetime_timestamp % 1 * 1e9))
+        datetime_object = datetime.strptime(raw_timestamp, self.raw_date_format)
+        protobuf_timestamp = Timestamp()
+        protobuf_timestamp.FromDatetime(datetime_object)
 
         return protobuf_timestamp
     

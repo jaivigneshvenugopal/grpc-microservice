@@ -26,7 +26,8 @@ async def stream_meter_readings():
         stub = meter_pb2_grpc.MeterReadingStub(channel)
         meter_reading_responses = stub.IssueMeterReading(meter_pb2.MeterReadingRequest())
         for meter_reading_response in meter_reading_responses:
-            yield json.dumps(MessageToDict(meter_reading_response))
+            meter_reading_response = MessageToDict(meter_reading_response)
+            yield json.dumps(meter_reading_response)
             await asyncio.sleep(0.01)
 
 @app.get("/")
