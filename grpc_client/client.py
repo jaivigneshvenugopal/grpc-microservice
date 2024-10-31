@@ -2,7 +2,6 @@ import sys
 sys.path.insert(0, '../protos')
 
 import grpc
-import time
 import json
 import uvicorn
 import asyncio
