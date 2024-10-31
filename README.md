@@ -13,8 +13,10 @@ the three services to run on the same host with different ports.
 1. Ensure docker is set up locally
 
 2. Clone the repository
+    - `https://github.com/jaivigneshvenugopal/grpc-microservice.git`
 
-3. At the root of the repository, run `docker compose up`
+3. At the root of the repository, run: 
+    - `docker compose up`
 
 4. Terminal
     - ![](./assets/docker_compose.png)
@@ -41,7 +43,7 @@ the three services to run on the same host with different ports.
     setting up specific environments, as they simply need to pull the images to
     run.
     - Using Docker Compose also allows you to run three different services on
-    the same host without needing separate terminal windows or tmux sessions..
+    the same host without needing separate terminal windows or tmux sessions.
     
 4. Usage of 'Single-Request-Stream-Response' function among the 4 type of gRPC methods
     - In our case, we have a CSV file containing numerous entries of the same
